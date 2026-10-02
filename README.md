@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.jpg" alt="A glowing teal agent core at an observatory console beside an amber command panel, floating file pages and a violet duplicate of the core under a night sky." width="100%"></p>
+
 # AI Agent System
 
 An extensible agent system that combines the power of language models with shell command execution and file manipulation capabilities.
