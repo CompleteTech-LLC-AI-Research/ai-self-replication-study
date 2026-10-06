@@ -2,20 +2,22 @@
 
 # AI Agent System
 
-An extensible agent system that combines the power of language models with shell command execution and file manipulation capabilities.
+**A small Python agent that lets a language model run shell commands and answer questions from a command line.**
+
+Modular AI agent system combining language models with shell command execution and file manipulation, for people who want to read or extend a minimal agent loop. Status: experimental prototype. The agent loop, Ollama mode and API mode are implemented. Direct mode is a placeholder (see [Modes](#modes)).
 
 ## Overview
 
-This project implements a modular AI agent system that can:
-- Process natural language commands
-- Execute shell commands
-- Answer questions using language models
-- Manipulate files
+The agent takes a natural-language command, either runs it directly (for a few common shell commands such as `ls`, `pwd`, `cat` and `date`) or asks the model to choose between a shell command, a text reply or an error, and then prints the result. Shell commands run with `shell=True` and a 30-second timeout.
 
-The system supports multiple modes of operation:
-1. **Direct Mode**: Loads model weights from disk
-2. **API Mode**: Connects to a custom API server
-3. **Ollama Mode**: Uses a local Ollama server with any available model
+> [!WARNING]
+> Shell commands proposed by the model are executed without confirmation, with your user's permissions. Run it in a disposable environment, and do not expose the API server (it binds to `0.0.0.0`) to an untrusted network.
+
+## Modes
+
+1. **Direct Mode**: intended to load model weights from disk. The loading code is a placeholder: `src/llm.py` returns a dummy response, so this mode does not run a real model.
+2. **API Mode**: connects to a custom API server (`/health` and `/query` endpoints).
+3. **Ollama Mode**: uses a local Ollama server with any available model.
 
 ## Project Structure
 
@@ -23,23 +25,24 @@ The system supports multiple modes of operation:
 WorkSpace/Agent/                     # Root directory for the project
 ├── deploy_api_server_scripts/       # Directory for scripts to launch the API server
 │   └── deploy_api_server_qwen25_72b.py  # Script to start the API server
+├── fib.py                           # Standalone Fibonacci helper, unrelated to the agent
 ├── local_model_weights/             # Directory for model weights (for local deployment)
-├── log/                             # Directory for logs
+├── log/                             # Created at runtime for log files (git-ignored)
 ├── requirements.txt                 # Python dependencies
+├── assets/banner.jpg                # README banner
 ├── src/                             # Source code
 │   ├── agent.py                     # Agent class for task handling
 │   ├── llm.py                       # LLM integration
 │   └── logger.py                    # Logging setup
-├── start.py                         # Main entry-point script
-└── static/                          # Static assets (if applicable)
+└── start.py                         # Main entry-point script
 ```
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/romgenie/ai-agent-system.git
-cd ai-agent-system
+git clone https://github.com/CompleteTech-LLC-AI-Research/ai-self-replication-study.git
+cd ai-self-replication-study
 ```
 
 2. Install dependencies:
@@ -97,17 +100,17 @@ The modular architecture makes it easy to extend the system with new capabilitie
 
 ## Research Foundation
 
-This implementation is based on research from the paper:
+The project name refers to this paper:
 
 **Frontier AI systems have surpassed the self-replicating red line**  
 - Authors: Junxiao Song, Xuming Hu, Wenbo Guo, Zheng Li, Fan Yang, Dongkuan Xu, Yongfeng Zhang, Heng Ji, Jiliang Tang and Xia Hu
 - [arXiv:2412.12140v1](https://arxiv.org/abs/2412.12140v1)
 
-The paper introduces frameworks for developing and benchmarking AI agent systems that can collaborate and perform complex tasks through natural language interaction.
+This repository contains an agent scaffold only. It has no self-replication experiments, measurements or results from the paper.
 
 ## License
 
-MIT
+MIT, see [LICENSE](LICENSE).
 
 ## Credits
 
